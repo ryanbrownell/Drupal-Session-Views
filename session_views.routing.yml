@@ -1,0 +1,31 @@
+session_views.settings:
+    path: '/admin/config/development/session_views'
+    defaults:
+        _form: 'Drupal\session_views\Form\SessionViewsSettingsForm'
+        _title: 'Session Views Settings'
+    requirements:
+        _permission: 'administer session views'
+
+session_views.start:
+    path: '/svstart'
+    defaults:
+        _form: 'Drupal\session_views\Form\SessionViewsSelectForm'
+        _title: 'Select your interests'
+    requirements:
+        _permission: 'set session values'      
+
+#session_views.content:
+#  path: '/hello'
+#  defaults:
+#    _controller: '\Drupal\session_views\Controller\SessionViewsController::content'
+#    _title: 'Hello World'
+#  requirements:
+#    _permission: 'access content'
+
+session_views.test:
+    path: '/svtest'
+    defaults:
+        _controller: '\Drupal\session_views\Controller\SessionViewsController::content'
+        _title: 'Test Results'
+    requirements: 
+        _permission: 'access content'

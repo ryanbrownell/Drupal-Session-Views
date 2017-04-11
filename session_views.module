@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * A module that allows for the sorting and filtering of views based on a session variable.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function session_views_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the session_views module.
+    case 'help.page.session_views':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('A module that allows for the filtering and/or sorting of views based on a session variable.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function session_views_theme() {
+  return [
+    'session_views' => [
+      'template' => 'session_views',
+      'render element' => 'children',
+    ],
+  ];
+}

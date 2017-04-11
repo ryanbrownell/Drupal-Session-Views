@@ -1,0 +1,9 @@
+
+administer session views:
+  title: 'Administer Session Views'
+  description: 'Perform administrative tasks on Session Views functionality.'
+  restrict access: TRUE
+set session values:
+    title: 'Set session values'
+    description: 'Allows users to set values for the current session.'
+    restrict access: FALSE

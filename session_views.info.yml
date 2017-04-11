@@ -1,0 +1,6 @@
+name: Session Views
+type: module
+description: A module that allows for the filtering and/or sorting of views based on a session variable.
+core: 8.x
+package: Custom
+version: 8.x-0.0-dev

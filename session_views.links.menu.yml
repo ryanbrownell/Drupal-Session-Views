@@ -1,0 +1,7 @@
+session_views.admin:
+  title: Session Views
+  description: Configure the Session Views module
+  parent: system.admin_config_ui
+  route_name: session_views.settings
+  weight: 100
+  
