@@ -58,6 +58,14 @@ class SessionViewsSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('session_views.selected_vocabulary'),
       '#description' => $this->t('Select one vocabulary whose terms will be used.'),
     );
+      
+    $form['log_selected_terms'] = array(
+        '#type' => 'checkboxes',
+        '#title' => $this->t('Selection logging'),
+        '#options' => array('LOGGING' => $this->t('Enable logging')),
+        '#default_value' => $config->get('session_views.log_selected_terms'),
+      '#description' => $this->t('Enables logging of selected terms. <strong>Not recommended for sites with high traffic volumes.</strong>'),
+    );
 
     return $form;
   }
@@ -77,6 +85,7 @@ class SessionViewsSettingsForm extends ConfigFormBase {
     $config->set('session_views.source_text', $form_state->getValue('source_text'));
     $config->set('session_views.page_title', $form_state->getValue('page_title'));
     $config->set('session_views.selected_vocabulary', $form_state->getValue('selected_vocabulary'));
+    $config->set('session_views.log_selected_terms', $form_state->getValue('log_selected_terms'));
     $config->save();
     return parent::submitForm($form, $form_state);
   }

@@ -98,8 +98,31 @@ class SessionViewsSelectForm extends FormBase {
       {
           $field != 0 ? $values[] = $field : '';
       }
-
+      
       $session->set('selected_terms', $values);
+      
+      $loggingEnabled = $config->get('session_views.log_selected_terms');
+      
+      $selectedTerms = $session->get('selected_terms');
+      $logMessage = "";
+      
+      $logMessage .= "The following TIDs were selected for a session: ";
+      
+      $firstNumber = true;
+
+      foreach ($selectedTerms as $term)
+      {
+          if (!$firstNumber)
+          {
+              $logMessage .= ", ";
+          }
+          
+          $logMessage .= $term;
+          
+          $firstNumber = false;
+      }
+      
+      \Drupal::logger('session_views')->info($logMessage);
       
       //kint($tempstore);
 //    $config = $this->config('session_views.settings');
