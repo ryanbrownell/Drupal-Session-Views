@@ -27,6 +27,11 @@ class SessionViewsSelectForm extends FormBase {
     $config = \Drupal::config('session_views.settings');
     $vocabulary = $config->get('session_views.selected_vocabulary');
       
+    $session = new \Symfony\Component\HttpFoundation\Session\Session();
+      //drupal_set_message(t('Hello World'), 'error');
+      
+    //kint($session);
+      
     if (empty($config))
     {
         drupal_set_message(t('This module has not been properly configured.'), 'error');
@@ -34,12 +39,14 @@ class SessionViewsSelectForm extends FormBase {
     else
     {
         $terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadTree($vocabulary);
+        
+        $selectedTerms = $session->get('selected_terms');
 
-        $selectedTerms = array();
+        $vocabularyTerms = array();
 
         foreach($terms as $term)
         {
-            $selectedTerms[$term->tid] = $term->name;
+            $vocabularyTerms[$term->tid] = $term->name;
         }
         
         $form['#title'] = $this->t($config->get('session_views.page_title'));
@@ -52,8 +59,8 @@ class SessionViewsSelectForm extends FormBase {
           '#type' => 'checkboxes',
           //'#title' => $this->t('Vocabulary'),
           '#multiple' => true,
-          '#options' => $selectedTerms,
-          //'#default_value' => $config->get('session_views.selected_vocabulary'),
+          '#options' => $vocabularyTerms,
+          '#default_value' => $selectedTerms,
           //'#description' => $this->t('Select one vocabulary whose terms will be used.'),
         );
 
@@ -62,6 +69,9 @@ class SessionViewsSelectForm extends FormBase {
           '#type' => 'submit',
           '#value' => $this->t('Continue to Site'),
         );
+        
+        // Ensure cache is disabled for this page.
+        $form['#cache'] = ['max-age' => 0];
     }
       
     return $form;
@@ -80,6 +90,7 @@ class SessionViewsSelectForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
       $tempstore = \Drupal::service('user.private_tempstore')->get('session_views');
+      $session = new \Symfony\Component\HttpFoundation\Session\Session();
       
       $values = array();
       
@@ -87,8 +98,9 @@ class SessionViewsSelectForm extends FormBase {
       {
           $field != 0 ? $values[] = $field : '';
       }
+
+      $session->set('selected_terms', $values);
       
-      $tempstore->set('selected_terms', $values);
       //kint($tempstore);
 //    $config = $this->config('session_views.settings');
 //    $config->set('session_views.source_text', $form_state->getValue('source_text'));
