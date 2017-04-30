@@ -72,6 +72,8 @@ class SessionViewsSelectForm extends FormBase {
         
         // Ensure cache is disabled for this page.
         $form['#cache'] = ['max-age' => 0];
+        
+        //kint($config->get('session_views.log_selected_terms'));
     }
       
     return $form;
@@ -89,6 +91,7 @@ class SessionViewsSelectForm extends FormBase {
    * {@inheritdoc}.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+      $config = \Drupal::config('session_views.settings');
       $tempstore = \Drupal::service('user.private_tempstore')->get('session_views');
       $session = new \Symfony\Component\HttpFoundation\Session\Session();
       
@@ -100,30 +103,31 @@ class SessionViewsSelectForm extends FormBase {
       }
       
       $session->set('selected_terms', $values);
-      
-      $loggingEnabled = $config->get('session_views.log_selected_terms');
-      
-      $selectedTerms = $session->get('selected_terms');
-      $logMessage = "";
-      
-      $logMessage .= "The following TIDs were selected for a session: ";
-      
-      $firstNumber = true;
-
-      foreach ($selectedTerms as $term)
+            
+      if ($config->get('session_views.log_selected_terms')['LOGGING'])
       {
-          if (!$firstNumber)
-          {
-              $logMessage .= ", ";
-          }
-          
-          $logMessage .= $term;
-          
-          $firstNumber = false;
+        $selectedTerms = $session->get('selected_terms');
+        $logMessage = "";
+
+        $logMessage .= "The following TIDs were selected for a session: ";
+
+        $firstNumber = true;
+
+        foreach ($selectedTerms as $term)
+        {
+            if (!$firstNumber)
+            {
+                $logMessage .= ", ";
+            }
+
+            $logMessage .= $term;
+
+            $firstNumber = false;
+        }
+
+        \Drupal::logger('session_views')->info($logMessage);
       }
-      
-      \Drupal::logger('session_views')->info($logMessage);
-      
+
       //kint($tempstore);
 //    $config = $this->config('session_views.settings');
 //    $config->set('session_views.source_text', $form_state->getValue('source_text'));
