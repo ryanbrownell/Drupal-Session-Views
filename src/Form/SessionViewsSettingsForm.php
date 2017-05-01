@@ -60,10 +60,9 @@ class SessionViewsSettingsForm extends ConfigFormBase {
     );
       
     $form['log_selected_terms'] = array(
-        '#type' => 'checkboxes',
-        '#title' => $this->t('Selection logging'),
-        '#options' => array('LOGGING' => $this->t('Enable logging')),
-        '#default_value' => $config->get('session_views.log_selected_terms'),
+      '#type' => 'checkbox',
+      '#title' => $this->t('Selection logging'),
+      '#default_value' => $config->get('session_views.log_selected_terms'),
       '#description' => $this->t('Enables logging of selected terms. <strong>Not recommended for sites with high traffic volumes.</strong>'),
     );
 
