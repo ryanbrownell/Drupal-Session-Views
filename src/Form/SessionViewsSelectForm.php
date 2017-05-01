@@ -23,15 +23,13 @@ class SessionViewsSelectForm extends FormBase {
    * {@inheritdoc}.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $config = \Drupal::config('session_views.settings');
     $vocabulary = $config->get('session_views.selected_vocabulary');
       
     $session = new \Symfony\Component\HttpFoundation\Session\Session();
-      //drupal_set_message(t('Hello World'), 'error');
-      
-    //kint($session);
-      
+    
+    //drupal_set_message(t('Hello World'), 'error');
+
     if (empty($config))
     {
         drupal_set_message(t('This module has not been properly configured.'), 'error');
@@ -57,11 +55,9 @@ class SessionViewsSelectForm extends FormBase {
 
         $form['selected_terms'] = array(
           '#type' => 'checkboxes',
-          //'#title' => $this->t('Vocabulary'),
           '#multiple' => true,
           '#options' => $vocabularyTerms,
           '#default_value' => $selectedTerms,
-          //'#description' => $this->t('Select one vocabulary whose terms will be used.'),
         );
 
         // Submit
@@ -72,8 +68,6 @@ class SessionViewsSelectForm extends FormBase {
         
         // Ensure cache is disabled for this page.
         $form['#cache'] = ['max-age' => 0];
-        
-        //kint($config->get('session_views.log_selected_terms'));
     }
       
     return $form;
@@ -91,8 +85,9 @@ class SessionViewsSelectForm extends FormBase {
    * {@inheritdoc}.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-      $config = \Drupal::config('session_views.settings');
-      $tempstore = \Drupal::service('user.private_tempstore')->get('session_views');
+      
+      
+      //$tempstore = \Drupal::service('user.private_tempstore')->get('session_views');
       $session = new \Symfony\Component\HttpFoundation\Session\Session();
       
       $values = array();
@@ -103,31 +98,9 @@ class SessionViewsSelectForm extends FormBase {
       }
       
       $session->set('selected_terms', $values);
-            
-      if ($config->get('session_views.log_selected_terms')['LOGGING'])
-      {
-        $selectedTerms = $session->get('selected_terms');
-        $logMessage = "";
-
-        $logMessage .= "The following TIDs were selected for a session: ";
-
-        $firstNumber = true;
-
-        foreach ($selectedTerms as $term)
-        {
-            if (!$firstNumber)
-            {
-                $logMessage .= ", ";
-            }
-
-            $logMessage .= $term;
-
-            $firstNumber = false;
-        }
-
-        \Drupal::logger('session_views')->info($logMessage);
-      }
-
+      
+      $this->logSessionValues();
+      
       //kint($tempstore);
 //    $config = $this->config('session_views.settings');
 //    $config->set('session_views.source_text', $form_state->getValue('source_text'));
@@ -135,5 +108,38 @@ class SessionViewsSelectForm extends FormBase {
 //    $config->set('session_views.selected_vocabulary', $form_state->getValue('selected_vocabulary'));
 //    $config->save();
     //return parent::submitForm($form, $form_state);
+  }
+  
+  /**
+   * Logs the session's current selection if the module is
+   * configured to do so.
+   */
+  public function logSessionValues() {
+    $config = \Drupal::config('session_views.settings');
+    
+    if ($config->get('session_views.log_selected_terms'))
+      {
+      drupal_set_message(t('This has been logged!'), 'info');
+        $session = new \Symfony\Component\HttpFoundation\Session\Session();
+        $selectedTerms = $session->get('selected_terms');
+        
+        $firstItem = true;
+        $logMessage = "";
+
+        $logMessage .= "The following TIDs were selected for a session: ";
+
+        foreach ($selectedTerms as $term)
+        {
+            if (!$firstItem)
+            {
+                $logMessage .= ", ";
+            }
+
+            $logMessage .= $term;
+            $firstItem = false;
+        }
+
+        \Drupal::logger('session_views')->info($logMessage);
+    }
   }
 }
