@@ -47,8 +47,12 @@ class SessionViewsField extends FieldPluginBase {
     //$entityManager = \Drupal::entityManager();
     //kint($entityManager->getFieldDefinitions('node', 'position'));
         
+    //TODO: REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
     //kint(\Drupal::entityTypeManager()->getDefinition('node')->getBundleLabel());
     kint(\Drupal::entityManager()->getAllBundleInfo()['node']);
+    kint(\Drupal\field\Entity\FieldConfig::loadByName('node', 'position', 'field_experience_type')->getSetting('handler'));
+    kint(\Drupal\field\Entity\FieldConfig::loadByName('node', 'position', 'field_experience_type')->getSetting('handler_settings'));
+    kint(\Drupal\field\Entity\FieldConfig::loadByName('node', 'position', 'field_experience_type')->getSetting('handler_settings')['target_bundles']);
     
     //TODO: REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
     
