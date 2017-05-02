@@ -142,4 +142,5 @@ class SessionViewsSelectForm extends FormBase {
         \Drupal::logger('session_views')->info($logMessage);
     }
   }
+  
 }
