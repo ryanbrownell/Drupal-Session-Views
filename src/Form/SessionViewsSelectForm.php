@@ -119,7 +119,7 @@ class SessionViewsSelectForm extends FormBase {
     
     if ($config->get('session_views.log_selected_terms'))
       {
-      drupal_set_message(t('This has been logged!'), 'info');
+      //drupal_set_message(t('This has been logged!'), 'info');
         $session = new \Symfony\Component\HttpFoundation\Session\Session();
         $selectedTerms = $session->get('selected_terms');
         
