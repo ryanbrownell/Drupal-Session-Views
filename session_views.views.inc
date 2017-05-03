@@ -25,12 +25,12 @@ function session_views_views_data() {
     );
 
 
-    $data['views']['session_views_field'] = array(
-        'title' => t('Session selection'),
+    $data['views']['session_views_flag_field'] = array(
+        'title' => t('Session selection flag'),
         'group' => t('Content'),
         'help' => t('Returns "session-views-selected" if the respective entity is part of the taxonomy that was selected by the user.'),
         'field' => array(
-            'id' => 'session_views_field',
+            'id' => 'session_views_flag_field',
         ),
     );
 

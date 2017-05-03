@@ -111,8 +111,7 @@ class SessionViewsSelectForm extends FormBase {
   }
   
   /**
-   * Logs the session's current selection if the module is
-   * configured to do so.
+   * Logs the session's current selection if the module is configured to do so.
    */
   public function logSessionValues() {
     $config = \Drupal::config('session_views.settings');
@@ -142,5 +141,4 @@ class SessionViewsSelectForm extends FormBase {
         \Drupal::logger('session_views')->info($logMessage);
     }
   }
-  
 }

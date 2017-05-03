@@ -92,12 +92,34 @@ class SessionViewsFlagField extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function render(ResultRow $values) {
-    
-    kint($this->options);
-    
-    kint($values->nid);
 
-    //return $values->nid;
+    $session_views_field = $this->options['session_views_field'];
+    
+    $fieldTerms = array();
+    $rawFieldTerms = entity_load('node', $values->nid)->get($session_views_field)->getValue();
+    
+    foreach ($rawFieldTerms as $term)
+    {
+      $fieldTerms[] = $term['target_id'];
+    }
+        
+    $session = new \Symfony\Component\HttpFoundation\Session\Session();
+    $sessionSelectedTerms = $session->get('selected_terms');
+
+    if (empty($sessionSelectedTerms))
+    {
+      return "session-views-selected";
+    }
+    
+    foreach ($sessionSelectedTerms as $term)
+    {
+      if (in_array($term, $fieldTerms))
+      {
+        return "session-views-selected";
+      }
+    }
+
+    return null;
   }
     
   //TODO: Consider moving the following out into the module class.
