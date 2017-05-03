@@ -128,7 +128,7 @@ class SessionViewsFlagField extends FieldPluginBase {
    * Gets an array of fields configured to work with Session Views.
    */
   private function getEligibleFields() {
-    kint($this->targetEntityType);
+    //kint($this->targetEntityType);
     
     $ENTITY_TYPE = 'node';
     $fields = $this->getEntityReferenceFields($ENTITY_TYPE);
