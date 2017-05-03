@@ -18,12 +18,11 @@ use Drupal\system\ActionConfigEntityInterface;
 */
 function session_views_views_data() {
 
-    $data['views']['table']['group'] = t('Custom Global');
-    $data['views']['table']['join'] = array(
-      // #global is a special flag which allows a table to appear all the time.
-      '#global' => array(),
-    );
-
+    //$data['views']['table']['group'] = t('Custom Global');
+//    $data['views']['table']['join'] = array(
+//      // #global is a special flag which allows a table to appear all the time.
+//      '#global' => array(),
+//    );
 
     $data['views']['session_views_flag_field'] = array(
         'title' => t('Session selection flag'),
