@@ -46,10 +46,11 @@ class SessionViewsFlagField extends FieldPluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     
+    //@todo: Clean this code up.
     //$entityManager = \Drupal::entityManager();
     //kint($entityManager->getFieldDefinitions('node', 'position'));
         
-    //TODO: REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
+    //@todo REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
     //kint(\Drupal::entityTypeManager()->getDefinition('node')->getBundleLabel());
     //kint(\Drupal::entityManager()->getFieldMap()['node']);
     //kint(\Drupal::entityManager()->getAllBundleInfo()['node']);
@@ -58,8 +59,7 @@ class SessionViewsFlagField extends FieldPluginBase {
     //kint(\Drupal\field\Entity\FieldConfig::loadByName('node', 'position', 'field_experience_type')->getSetting('handler_settings'));
     //kint(\Drupal\field\Entity\FieldConfig::loadByName('node', 'position', 'field_experience_type')->getSetting('handler_settings')['target_bundles']);
     
-    //TODO: REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
-        
+    // @todo: REVISE UPDATE found at https://drupal.stackexchange.com/questions/167001/field-info-field-deprecated-whats-the-equivalent
     
     //kint($field_map);
     
@@ -122,12 +122,14 @@ class SessionViewsFlagField extends FieldPluginBase {
     return null;
   }
     
-  //TODO: Consider moving the following out into the module class.
+  // @todo Consider moving the following out into the module class.
   
   /**
    * Gets an array of fields configured to work with Session Views.
    */
   private function getEligibleFields() {
+    kint($this->targetEntityType);
+    
     $ENTITY_TYPE = 'node';
     $fields = $this->getEntityReferenceFields($ENTITY_TYPE);
 
