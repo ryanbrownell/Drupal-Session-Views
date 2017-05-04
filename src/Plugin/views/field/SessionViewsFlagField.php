@@ -93,6 +93,7 @@ class SessionViewsFlagField extends FieldPluginBase {
    */
   public function render(ResultRow $values) {
 
+    // @todo Validate entity has field before running anything (Otherwise a php error is thrown).
     $session_views_field = $this->options['session_views_field'];
     
     $fieldTerms = array();
